@@ -167,6 +167,30 @@ A sensor marked as only available on TAS5825M fails validation when the amplifie
 All sensors accept the options from [Binary Sensor](/components/binary_sensor/). They default to the `problem` device
 class and the `diagnostic` entity category.
 
+## Select
+
+The `tas58xx` select platform changes the mixer mode while the device is running.
+
+```yaml
+select:
+  - platform: tas58xx
+    mixer_mode:
+      name: "Amplifier Mixer Mode"
+```
+
+### Select Configuration Variables
+
+- **tas58xx_id** (*Optional*, [ID](/guides/configuration-types/#id)): The ID of the `tas58xx` platform. Required
+  when more than one amplifier is configured.
+- **mixer_mode** (*Optional*): A select for the input mixer, with the options `Stereo`, `Stereo inverse`, `Mono`,
+  `Left` and `Right`, as described for `mixer_mode` above. With `dac_mode: pbtl` only `Mono`, `Left` and `Right` are
+  offered. All options from [Select](/components/select/).
+
+The select starts with the `mixer_mode` of the `tas58xx` platform. A selected mode is saved and restored after a
+restart until `mixer_mode` or `dac_mode` is changed in the YAML, which applies the YAML `mixer_mode` again. A new mode
+is written immediately while audio is playing, otherwise when audio starts. The select defaults to the `config` entity
+category.
+
 ## Configuration Examples
 
 ### Stereo Speakers
